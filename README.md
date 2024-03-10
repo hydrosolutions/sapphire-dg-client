@@ -68,4 +68,23 @@ ValueError: Unauthorized. Please check your API key!
 
 ```
 
+Download operational data - example for HRU 15149 for 2023-01-01
+
+```python
+from sapphire_dg import SapphireClient
+client = SapphireClient(
+    host="server host", # if not provided pointing to sapphire dg server
+    api_key="api key" # api key
+)
+
+resp = client.operational.get_control_spinup_and_forecast(
+    hru_code="15149", 
+    date="2023-01-01"
+)
+resp
+>>> /tmp/Operational_HRU_15149_2023-01-01_2024-03-10.csv
+```
+
+
+
 
