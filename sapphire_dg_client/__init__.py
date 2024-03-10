@@ -1,1 +1,1 @@
-from client import SapphireDGClient
+from .client import SapphireDGClient
