@@ -57,12 +57,14 @@ client = SapphireClient(
     models=["pf"],
      directory="./tmp"
 )
-Traceback (most recent call last):
-  File "<stdin>", line 1, in <module>
-  File "/some_path_to_system_installaton_here/sapphire-dg-gateway/lib/python3.11/site-packages/sapphire_dg_client/client.py", line 51, in get_ensemble_forecast
-    raise ValueError(f"Failed to get ensemble forecast: {resp.text}")
-ValueError: Failed to get ensemble forecast: {"detail": "Unauthorized"}
+...
+File ~/.virtualenvs/sapphire-dg-gateway/lib/python3.11/site-packages/sapphire_dg_client/client_base.py:23, in SapphireDGClientBase._check_unauthorized(response)
+     20 @staticmethod
+     21 def _check_unauthorized(response: requests.Response):
+     22     if response.status_code == 401:
+---> 23         raise ValueError('Unauthorized. Please check your API key!')
 
+ValueError: Unauthorized. Please check your API key!
 
 ```
 
