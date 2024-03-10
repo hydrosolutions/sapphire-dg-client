@@ -17,6 +17,12 @@ class SapphireDGClientBase:
         if not self.api_key:
             raise ValueError('API key is required for client library to work!')
 
+    @staticmethod
+    def _check_unauthorized(response: requests.Response):
+        if response.status_code == 401:
+            raise ValueError('Unauthorized. Please check your API key!')
+
+
     def _call_api(
             self,
             method: str,
@@ -31,4 +37,5 @@ class SapphireDGClientBase:
             headers=headers,
             data=body
         )
+        self._check_unauthorized(response)
         return response
