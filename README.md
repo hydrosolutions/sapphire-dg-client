@@ -85,6 +85,14 @@ resp
 >>> /tmp/Operational_HRU_15149_2023-01-01_2024-03-10.csv
 ```
 
+Download ERA5 Land data - example for HRU 15149 for 2023-01-01
 
-
+```python
+from sapphire_dg import SapphireClient
+client = SapphireClient(
+    api_key="api key" # api key
+)
+client.era5_land.get_era5_land("15149", date="2023-01-01", end_date="2023-01-31")
+>>> '/tmp/HRU_15149_2023-01-01_2023-01-31.csv'
+```
 
