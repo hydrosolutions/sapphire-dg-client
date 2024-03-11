@@ -1,4 +1,5 @@
 import os
+from typing import Union
 
 import requests
 
@@ -6,6 +7,10 @@ from .client_base import SapphireDGClientBase
 
 
 class SapphireECMWFENSClient(SapphireDGClientBase):
+    _raster_parameters = {
+        "2t",
+        "tp",
+    }
 
     _ensemble_options = {
         "all",
@@ -23,7 +28,8 @@ class SapphireECMWFENSClient(SapphireDGClientBase):
     ):
         super().__init__(host, api_key)
 
-    def _directory_exists(self, directory: str):
+    @staticmethod
+    def _directory_exists(directory: str):
         if not os.path.exists(directory):
             os.makedirs(directory)
 
@@ -33,6 +39,29 @@ class SapphireECMWFENSClient(SapphireDGClientBase):
                 f"Invalid ensemble option. Must be one of {self._ensemble_options} or for pf options 1 to 50"
             )
 
+    def _add_model_to_endpoint(self, endpoint: str, models: list[str]):
+        for model in models:
+            endpoint = endpoint + f"&models={model}"
+        return endpoint
+
+    def _call_api_and_save_file(
+            self,
+            endpoint: str,
+            directory: str
+    ):
+        resp = self._call_api(
+            method="GET",
+            endpoint=endpoint
+        )
+
+        files_downloaded = []
+        self._directory_exists(directory)
+        for file_resp in resp.json():
+            resp = requests.get(file_resp.get('link'))
+            local_file_path = self._save_file(resp, directory, file_resp['filename'])
+            files_downloaded.append(local_file_path)
+        return files_downloaded
+
     def get_ensemble_forecast(
             self,
             hru_code: str,
@@ -40,22 +69,39 @@ class SapphireECMWFENSClient(SapphireDGClientBase):
             models: list[str],
             directory: str = "/tmp"
     ):
-        endpoint = f"api/calculations/ecmwf/template/RSMinerva/links?hru_code={hru_code}&date={date}&source=ENS"
-        for m in models:
-            endpoint = endpoint + f"&models={m}"
-        resp = self._call_api(
-            method="GET",
-            endpoint=endpoint
-        )
-        if resp.status_code != 200:
-            raise ValueError(f"Failed to get ensemble forecast: {resp.text}")
-        files_downloaded = []
-        self._directory_exists(directory)
-        for file_resp in resp.json():
-            local_file_path = f"{directory}/{file_resp['filename']}"
-            with open(local_file_path, "wb") as f:
-                write = requests.get(file_resp.get('link')).content
-                f.write(write)
-                files_downloaded.append(local_file_path)
-        return files_downloaded
+        if isinstance(models, str):
+            models = [models]
 
+        for model in models:
+            self._validate_ensemble_options(model)
+
+        endpoint = f"api/calculations/ecmwf/template/RSMinerva/links?hru_code={hru_code}&date={date}&source=ENS"
+        endpoint = self._add_model_to_endpoint(endpoint, models)
+        return self._call_api_and_save_file(
+            endpoint=endpoint,
+            directory=directory,
+        )
+
+
+    def get_raster_forecast(
+            self,
+            parameter: str,
+            date: str,
+            models: Union[list[str], str],
+            directory: str = "/tmp"
+    ):
+        if parameter not in self._raster_parameters:
+            raise ValueError(f"Invalid parameter. Must be one of {self._raster_parameters}")
+
+        if isinstance(models, str):
+            models = [models]
+
+        for model in models:
+            self._validate_ensemble_options(model)
+
+        endpoint = f"/api/raster/ecmwf-ens/links?date={date}&parameter={parameter}"
+        endpoint = self._add_model_to_endpoint(endpoint, models)
+        return self._call_api_and_save_file(
+            endpoint=endpoint,
+            directory=directory,
+        )
