@@ -9,6 +9,8 @@ pip install git+https://github.com/hydrosolutions/sapphire-dg-client.git
 
 ## Usage
 
+Download ECMWF ENS forecast data - example for HRU 15149 for 2024-01-29
+
 ```python
 from sapphire_dg import SapphireClient
 
@@ -65,6 +67,18 @@ File ~/.virtualenvs/sapphire-dg-gateway/lib/python3.11/site-packages/sapphire_dg
 ---> 23         raise ValueError('Unauthorized. Please check your API key!')
 
 ValueError: Unauthorized. Please check your API key!
+
+```
+Download ECMWF ENS raster forecast data - example for HRU 15149 for 2024-01-29
+
+```python
+from sapphire_dg import SapphireClient
+client = SapphireClient(
+    api_key="api key" # api key
+)
+client.ecmwf_ens.get_raster_forecast(parameter="2t", date="2024-02-22", models="all")
+>>> ['/tmp/ecmwf-ens-param-2t-forcast-type-pf-60-80-35-45-coords.nc',
+ '/tmp/ecmwf-ens-param-2t-forcast-type-cf-60-80-35-45-coords.nc']
 
 ```
 
