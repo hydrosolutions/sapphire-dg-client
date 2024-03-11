@@ -7,7 +7,7 @@ class SapphireEra5LandClient(SapphireDGClientBase):
             self,
             hru_code: str,
             date: str,
-            end_date: str,
+            end_date: str = None,
             directory: str = "/tmp"
 
     ):
