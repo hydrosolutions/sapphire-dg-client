@@ -7,9 +7,9 @@ class SapphireOperationalClient(SapphireDGClientBase):
             self,
             hru_code: str,
             date: str,
-            directory: str = "/tmp"
+            directory: str = "/tmp",
     ):
-        endpoint = f"api/calculations/operational/template/RSMinerva?hru_code={hru_code}&start_date={date}"
+        endpoint = f"api/calculations/operational/template/?hru_code={hru_code}&start_date={date}"
         resp = self._call_api(
             method="GET",
             endpoint=endpoint
@@ -22,8 +22,4 @@ class SapphireOperationalClient(SapphireDGClientBase):
         else:
             filename = f"control_spinup_and_forecast_{hru_code}_{date}.csv"
 
-        file = f"{directory}/{filename}"
-        with open(file, "wb") as f:
-                f.write(resp.content)
-
-        return file
+        return self._save_file(resp, directory, filename)

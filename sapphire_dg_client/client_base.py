@@ -22,6 +22,12 @@ class SapphireDGClientBase:
         if response.status_code == 401:
             raise ValueError('Unauthorized. Please check your API key!')
 
+    @staticmethod
+    def _save_file(response: requests.Response, directory: str, filename: str):
+        file = f"{directory}/{filename}"
+        with open(file, "wb") as f:
+            f.write(response.content)
+        return file
 
     def _call_api(
             self,
@@ -37,5 +43,8 @@ class SapphireDGClientBase:
             headers=headers,
             data=body
         )
+        if response.status_code != 200:
+            raise ValueError(f"Failed to get data from {endpoint}: {response.text}")
+
         self._check_unauthorized(response)
         return response
