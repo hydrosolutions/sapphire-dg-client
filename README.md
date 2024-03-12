@@ -15,7 +15,6 @@ Download ECMWF ENS forecast data - example for HRU 15149 for 2024-01-29
 from sapphire_dg import SapphireClient
 
 client = SapphireClient(
-    host="server host", # if not provided pointing to sapphire dg server
     api_key="api key" # api key for authorization to the sapphire dg server
 )
 
@@ -48,7 +47,6 @@ If wrong API_KEY is provided, the client will raise an exception.
 ```python
 from sapphire_dg import SapphireClient
 client = SapphireClient(
-    host="server host", # if not provided pointing to sapphire dg server
     api_key="wrong api key" # wrong api key for authorization to the sapphire dg server
 )
 
@@ -87,7 +85,6 @@ Download operational data - example for HRU 15149 for 2023-01-01
 ```python
 from sapphire_dg import SapphireClient
 client = SapphireClient(
-    host="server host", # if not provided pointing to sapphire dg server
     api_key="api key" # api key
 )
 
