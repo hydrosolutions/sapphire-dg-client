@@ -8,8 +8,9 @@ class SapphireOperationalClient(SapphireDGClientBase):
             hru_code: str,
             date: str,
             directory: str = "/tmp",
+            template="RSMinerva"
     ):
-        endpoint = f"api/calculations/operational/template/?hru_code={hru_code}&start_date={date}"
+        endpoint = f"api/calculations/operational/template/{template}?hru_code={hru_code}&start_date={date}"
         resp = self._call_api(
             method="GET",
             endpoint=endpoint
