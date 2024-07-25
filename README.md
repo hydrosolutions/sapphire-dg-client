@@ -5,6 +5,7 @@ Python client library to be used for fetching data from Sapphire Data Gateway!
 
 ```shell
 pip install git+https://github.com/hydrosolutions/sapphire-dg-client.git
+export SAPPHIRE_DG_HOST="url-to-data-gateway" # You first have to put the url to the data gateway in the environment variable
 ```
 
 ## Usage

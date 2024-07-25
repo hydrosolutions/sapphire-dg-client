@@ -12,10 +12,12 @@ class SapphireDGClientBase:
             host=None,
             api_key=None,
     ):
-        self.host = host or os.environ.get('SAPPHIRE_DG_HOST', 'https://data-gateway.ieasyhydro.org/')
+        self.host = host or os.environ.get('SAPPHIRE_DG_HOST')
         self.api_key = api_key or os.environ.get('SAPPHIRE_DG_API_KEY')
         if not self.api_key:
             raise ValueError('API key is required for client library to work!')
+        if not self.host:
+            raise ValueError('Host is required for client library to work!')
 
     @staticmethod
     def _check_unauthorized(response: requests.Response):
