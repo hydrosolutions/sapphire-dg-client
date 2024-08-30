@@ -108,3 +108,18 @@ client.era5_land.get_era5_land("15149", date="2023-01-01", end_date="2023-01-31"
 >>> '/tmp/HRU_15149_2023-01-01_2023-01-31.csv'
 ```
 
+Download ERA5 Land raster files - example total_precipitation, 2m_temperature for 2024-08-24
+
+```python
+from sapphire_dg import SapphireClient
+client = SapphireClient(
+    api_key="api key" # api key
+)
+
+client.era5_land.get_raster_reanalysys("total_precipitation", date="2024-08-24")
+>>> ['/tmp/ecmwf-reanalysis-era5-land-param-total_precipitation.nc']
+
+client.era5_land.get_raster_reanalysys("2m_temperature", date="2024-08-24")
+>>> ['/tmp/ecmwf-reanalysis-era5-land-param-2m_temperature.nc']
+
+```
