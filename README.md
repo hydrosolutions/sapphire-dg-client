@@ -117,10 +117,10 @@ client = SapphireDGClient(
     api_key="api key" # api key for authorization to the sapphire dg server
 )
 
-client.era5_land.get_raster_reanalysys("total_precipitation", date="2024-08-24")
+client.era5_land.get_raster_reanalysis("total_precipitation", date="2024-08-24")
 >>> ['/tmp/ecmwf-reanalysis-era5-land-param-total_precipitation.nc']
 
-client.era5_land.get_raster_reanalysys("2m_temperature", date="2024-08-24")
+client.era5_land.get_raster_reanalysis("2m_temperature", date="2024-08-24")
 >>> ['/tmp/ecmwf-reanalysis-era5-land-param-2m_temperature.nc']
 
 ```
