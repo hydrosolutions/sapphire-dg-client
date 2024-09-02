@@ -13,9 +13,9 @@ export SAPPHIRE_DG_HOST="url-to-data-gateway" # You first have to put the url to
 Download ECMWF ENS forecast data - example for HRU 15149 for 2024-01-29
 
 ```python
-from sapphire_dg import SapphireClient
+from sapphire_dg_client import SapphireDGClient
 
-client = SapphireClient(
+client = SapphireDGClient(
     api_key="api key" # api key for authorization to the sapphire dg server
 )
 
@@ -46,8 +46,9 @@ files_downloaded = client.ecmwf_ens.get_ensemble_forecast(
 If wrong API_KEY is provided, the client will raise an exception.
 
 ```python
-from sapphire_dg import SapphireClient
-client = SapphireClient(
+from sapphire_dg_client import SapphireDGClient
+
+client = SapphireDGClient(
     api_key="wrong api key" # wrong api key for authorization to the sapphire dg server
 )
 
@@ -71,10 +72,7 @@ ValueError: Unauthorized. Please check your API key!
 Download ECMWF ENS raster forecast data - example for HRU 15149 for 2024-01-29
 
 ```python
-from sapphire_dg import SapphireClient
-client = SapphireClient(
-    api_key="api key" # api key
-)
+
 client.ecmwf_ens.get_raster_forecast(parameter="2t", date="2024-02-22", models="all")
 >>> ['/tmp/ecmwf-ens-param-2t-forcast-type-pf-60-80-35-45-coords.nc',
  '/tmp/ecmwf-ens-param-2t-forcast-type-cf-60-80-35-45-coords.nc']
@@ -84,9 +82,10 @@ client.ecmwf_ens.get_raster_forecast(parameter="2t", date="2024-02-22", models="
 Download operational data - example for HRU 15149 for 2023-01-01
 
 ```python
-from sapphire_dg import SapphireClient
-client = SapphireClient(
-    api_key="api key" # api key
+from sapphire_dg_client import SapphireDGClient
+
+client = SapphireDGClient(
+    api_key="api key" # api key for authorization to the sapphire dg server
 )
 
 resp = client.operational.get_control_spinup_and_forecast(
@@ -100,9 +99,10 @@ resp
 Download ERA5 Land data - example for HRU 15149 for 2023-01-01
 
 ```python
-from sapphire_dg import SapphireClient
-client = SapphireClient(
-    api_key="api key" # api key
+from sapphire_dg_client import SapphireDGClient
+
+client = SapphireDGClient(
+    api_key="api key" # api key for authorization to the sapphire dg server
 )
 client.era5_land.get_era5_land("15149", date="2023-01-01", end_date="2023-01-31")
 >>> '/tmp/HRU_15149_2023-01-01_2023-01-31.csv'
@@ -111,9 +111,10 @@ client.era5_land.get_era5_land("15149", date="2023-01-01", end_date="2023-01-31"
 Download ERA5 Land raster files - example total_precipitation, 2m_temperature for 2024-08-24
 
 ```python
-from sapphire_dg import SapphireClient
-client = SapphireClient(
-    api_key="api key" # api key
+from sapphire_dg_client import SapphireDGClient
+
+client = SapphireDGClient(
+    api_key="api key" # api key for authorization to the sapphire dg server
 )
 
 client.era5_land.get_raster_reanalysys("total_precipitation", date="2024-08-24")
