@@ -8,6 +8,17 @@ pip install git+https://github.com/hydrosolutions/sapphire-dg-client.git
 export SAPPHIRE_DG_HOST="url-to-data-gateway" # You first have to put the url to the data gateway in the environment variable
 ```
 
+If you don't export the `SAPPHIRE_DG_HOST` environment variable, the client will raise an exception.
+You can still feed the client with the host url by providing it as an argument to the client constructor.
+
+```python
+from sapphire_dg_client import SapphireDGClient
+
+client = SapphireDGClient(
+    api_key="",
+    host="url-to-data-gateway"
+)
+```
 ## Usage
 
 Download ECMWF ENS forecast data - example for HRU 15149 for 2024-01-29
