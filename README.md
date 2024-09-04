@@ -134,4 +134,9 @@ client.era5_land.get_raster_reanalysis("total_precipitation", date="2024-08-24")
 client.era5_land.get_raster_reanalysis("2m_temperature", date="2024-08-24")
 >>> ['/tmp/ecmwf-reanalysis-era5-land-param-2m_temperature.nc']
 
+
+# if daily data is not available, then you can also try downloading monthly data
+client.era5_land.get_raster_reanalysis("2m_temperature", date="2024-03")
+>>> ['/tmp/ecmwf-reanalysis-era5-land-param-2m_temperature-month-202403.nc']
+
 ```
