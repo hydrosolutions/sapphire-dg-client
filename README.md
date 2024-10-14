@@ -140,3 +140,16 @@ client.era5_land.get_raster_reanalysis("2m_temperature", date="2024-03")
 >>> ['/tmp/ecmwf-reanalysis-era5-land-param-2m_temperature-month-202403.nc']
 
 ```
+
+Download Joel Snow Model raster files - example for parameter HS and date 2024-10-13
+
+```python
+from sapphire_dg_client import SapphireDGClient
+
+client = SapphireDGClient(api_key='api-key')
+
+client.snow_model.get_raster_forecast("HS", "2024-10-13")
+
+>>> ['/tmp/HS_20241013.nc']
+
+```
